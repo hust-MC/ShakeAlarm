@@ -1,5 +1,7 @@
 package com.emercy.puzzlealarm;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -24,7 +27,7 @@ public class MainActivity extends Activity
 {
 	private Button btn = null;
 	private AlarmManager alarmManager = null;
-	Calendar cal = Calendar.getInstance();
+	Calendar c = Calendar.getInstance();
 
 	LayoutInflater inflater;
 	LinearLayout setAlarm;
@@ -37,10 +40,16 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		
+		String timeOnBtn = "";
+		final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		timeOnBtn = sdf.format(new Date(c.getTimeInMillis()));
+
 		inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		btn = (Button) findViewById(R.id.btn);
+		btn = (Button) findViewById(R.id.btn_setClock);
+		btn.setText(timeOnBtn);
 		btn.setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View view)
@@ -59,14 +68,14 @@ public class MainActivity extends Activity
 									public void onClick(DialogInterface dialog,
 											int which)
 									{
-
-										Calendar c = Calendar.getInstance();// 获取日期对象
 										c.set(Calendar.HOUR_OF_DAY,
 												timePicker.getCurrentHour());        // 设置闹钟小时数
 										c.set(Calendar.MINUTE,
 												timePicker.getCurrentMinute());            // 设置闹钟的分钟数
 										c.set(Calendar.SECOND, 0);                // 设置闹钟的秒数
 										c.set(Calendar.MILLISECOND, 0);            // 设置闹钟的毫秒数
+										
+										btn.setText(sdf.format(new Date(c.getTimeInMillis())));
 										Intent intent = new Intent(
 												MainActivity.this,
 												AlarmReceiver.class);    // 创建Intent对象
@@ -75,20 +84,6 @@ public class MainActivity extends Activity
 														MainActivity.this, 0,
 														intent, 0);    // 创建PendingIntent
 
-										Log.d("MC", c.get(Calendar.YEAR) + " ");
-										Log.d("MC", c.get(Calendar.MONTH) + " ");
-										Log.d("MC", c.get(Calendar.DATE) + " ");
-										Log.d("MC",
-												timePicker.getCurrentHour()
-														+ " "
-														+ c.get(Calendar.HOUR_OF_DAY));
-										Log.d("MC",
-												timePicker.getCurrentMinute()
-														+ " "
-														+ c.get(Calendar.MINUTE));
-										Log.d("MC", c.getTimeInMillis() + "");
-										Log.d("MC", System.currentTimeMillis()
-												+ "");
 										alarmManager.set(
 												AlarmManager.RTC_WAKEUP,
 												c.getTimeInMillis(), pi);        // 设置闹钟，当前时间就唤醒

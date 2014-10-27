@@ -124,10 +124,6 @@ public class ShakePhone extends Activity
 					int value = (int) Math.max(Math.abs(values[0]),					// 计算与敏感值的差值
 							Math.max(Math.abs(values[1]), Math.abs(values[2])))
 							- shakeSenseValue;
-					Log.d("MC", Math.abs(values[0]) + "");
-					Log.d("MC", Math.abs(values[1]) + "");
-					Log.d("MC", Math.abs(values[2]) + "");
-					Log.d("MC", value + "");
 					if (value > 0)
 					{
 						alertValue += value;
@@ -135,6 +131,7 @@ public class ShakePhone extends Activity
 						{
 							mMediaPlayer.stop();
 							mSensorManager.unregisterListener(sensorListener);
+							textView.setTextColor(android.graphics.Color.MAGENTA);
 							textView.setText("清醒值:\n100%\n成功起床☺!!!");
 						}
 						else
