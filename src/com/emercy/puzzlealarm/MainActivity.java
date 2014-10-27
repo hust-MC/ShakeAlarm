@@ -90,7 +90,6 @@ public class MainActivity extends Activity
 										Toast.makeText(MainActivity.this,
 												"闹钟设置成功", Toast.LENGTH_LONG)
 												.show();// 提示用户
-
 									}
 								}).setNegativeButton("取消", null).show();
 			}
