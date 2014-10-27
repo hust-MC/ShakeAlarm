@@ -4,5 +4,6 @@
     <string name="app_name">PuzzleAlarm</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="shakeSenseValue">13</string>
 
 </resources>

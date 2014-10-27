@@ -78,8 +78,10 @@ public class MainActivity extends Activity
 										Log.d("MC", c.get(Calendar.YEAR) + " ");
 										Log.d("MC", c.get(Calendar.MONTH) + " ");
 										Log.d("MC", c.get(Calendar.DATE) + " ");
-										Log.d("MC", timePicker.getCurrentHour()
-												+ " " + c.get(Calendar.HOUR_OF_DAY));
+										Log.d("MC",
+												timePicker.getCurrentHour()
+														+ " "
+														+ c.get(Calendar.HOUR_OF_DAY));
 										Log.d("MC",
 												timePicker.getCurrentMinute()
 														+ " "
