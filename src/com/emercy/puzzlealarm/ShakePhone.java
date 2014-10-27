@@ -155,6 +155,7 @@ public class ShakePhone extends Activity
 				}
 			}
 		};
+		
 		// 4注册侦听事件
 		mSensorManager.registerListener(sensorListener,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),

@@ -74,8 +74,8 @@ public class MainActivity extends Activity
 												timePicker.getCurrentHour());        // 设置闹钟小时数
 										c.set(Calendar.MINUTE,
 												timePicker.getCurrentMinute());            // 设置闹钟的分钟数
-										c.set(Calendar.SECOND, 0);                // 设置闹钟的秒数
-										c.set(Calendar.MILLISECOND, 0);            // 设置闹钟的毫秒数
+//										c.set(Calendar.SECOND, 0);                // 设置闹钟的秒数
+//										c.set(Calendar.MILLISECOND, 0);            // 设置闹钟的毫秒数
 
 										btn.setText(sdf.format(new Date(c
 												.getTimeInMillis())));
@@ -86,9 +86,10 @@ public class MainActivity extends Activity
 														MainActivity.this, 0,
 														intent, 0);    // 创建PendingIntent
 
-										alarmManager.set(
-												AlarmManager.RTC_WAKEUP,
-												c.getTimeInMillis(), pi);        // 设置闹钟，当前时间就唤醒
+										alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,    // 设置闹钟，当前时间就唤醒
+												c.getTimeInMillis()-System.currentTimeMillis(),
+												24*60*60*1000, pi);
+										
 										Toast.makeText(MainActivity.this,
 												"闹钟设置成功", Toast.LENGTH_LONG)
 												.show();// 提示用户
