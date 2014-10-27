@@ -12,13 +12,18 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Vibrator;
+import android.provider.CalendarContract.Instances;
 import android.app.Activity;
 import android.app.Service;
 import android.text.Html;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ShakePhone extends Activity
 {
@@ -28,10 +33,12 @@ public class ShakePhone extends Activity
 	// 震动器
 	private Vibrator vibrator;
 
-	SensorEventListener sensorListener;
+	private SensorEventListener sensorListener;		// 申明传感器监听事件
 	private TextView textView;
-	MediaPlayer mMediaPlayer;
+	private MediaPlayer mMediaPlayer;
+	private Exit exit = new Exit();
 	private int alertValue = 0;
+	private boolean wakeUp = false;						// 标志是否醒来
 
 	private void getWidget()
 	{
@@ -132,7 +139,9 @@ public class ShakePhone extends Activity
 							mMediaPlayer.stop();
 							mSensorManager.unregisterListener(sensorListener);
 							textView.setTextColor(android.graphics.Color.MAGENTA);
-							textView.setText("清醒值:\n100%\n成功起床☺!!!");
+							textView.setText("清醒值:\n100%\n\n成功起床\n☺");
+							wakeUp = true;
+							vibrator.vibrate(2000);
 						}
 						else
 						{
@@ -140,7 +149,7 @@ public class ShakePhone extends Activity
 									.fromHtml("<big><b>清醒值:\n" + alertValue
 											+ "%</b></big>");
 							textView.setText(senceValue);
-							vibrator.vibrate(1000);
+//							vibrator.vibrate(1000);
 						}
 					}
 				}
@@ -153,9 +162,75 @@ public class ShakePhone extends Activity
 	}
 
 	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+		{
+			if (wakeUp)
+			{
+				pressAgainExit();
+			}
+			else
+			{
+				Toast.makeText(this, R.string.unablePressBack,Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		}
+		return false;
+	}
+
+	/*
+	 * 按两次退出
+	 */
+	private void pressAgainExit()
+	{
+		if (exit.isExit())
+		{
+			finish();
+			MainActivity.instance.finish();
+		}
+		else
+		{
+			Toast.makeText(getApplicationContext(), R.string.pressBackAgain,
+					Toast.LENGTH_SHORT).show();
+			exit.doExitInOneSecond();
+		}
+	}
+
+	class Exit
+	{
+		private boolean isExit = false;
+		private final Runnable task = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				isExit = false;
+			}
+		};
+
+		public void doExitInOneSecond()
+		{
+			isExit = true;
+			HandlerThread thread = new HandlerThread("doTask");
+			thread.start();
+			new Handler(thread.getLooper()).postDelayed(task, 2000);
+		}
+
+		public boolean isExit()
+		{
+			return isExit;
+		}
+
+		public void setExit(boolean isExit)
+		{
+			this.isExit = isExit;
+		}
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
