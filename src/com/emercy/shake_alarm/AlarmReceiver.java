@@ -1,4 +1,4 @@
-package com.emercy.puzzlealarm;
+package com.emercy.shake_alarm;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

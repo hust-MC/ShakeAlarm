@@ -1,7 +1,9 @@
-package com.emercy.puzzlealarm;
+package com.emercy.shake_alarm;
 
 import java.io.IOException;
 import java.util.List;
+
+import com.emercy.puzzlealarm.R;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
