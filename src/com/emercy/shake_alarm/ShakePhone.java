@@ -85,6 +85,13 @@ public class ShakePhone extends Activity
 		mMediaPlayer.start();// 开始播放
 	}
 
+	private void startVibrate()
+	{
+		long[] vib =
+		{ 0, 200, 3000, 500, 2000, 1000 };
+		vibrator.vibrate(vib, 4);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -94,12 +101,28 @@ public class ShakePhone extends Activity
 		setContentView(R.layout.shake_phone);
 		getWidget();
 
-		playAlarm();
-
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		// 1获得硬件信息
 
 		vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+
+		if (MainActivity.getAlarmStyle())
+		{
+			playAlarm();
+		}
+		else
+		{
+			startVibrate();
+		}
+
+		if (MainActivity.getAlarmStyle())
+		{
+			playAlarm();
+		}
+		else
+		{
+			startVibrate();
+		}
 
 		// 2 判断当前手机是否带加速度感应器，如果不带，直接结束，不启动服务
 		List<Sensor> sensors = mSensorManager
@@ -138,7 +161,14 @@ public class ShakePhone extends Activity
 						alertValue += value;
 						if (alertValue >= 100)
 						{
-							mMediaPlayer.stop();
+							if (MainActivity.getAlarmStyle())
+							{
+								mMediaPlayer.stop();
+							}
+							else
+							{
+								vibrator.cancel();
+							}
 							mSensorManager.unregisterListener(sensorListener);
 							textView.setTextColor(android.graphics.Color.MAGENTA);
 							textView.setText("清醒值:\n100%\n\n成功起床\n☺");
@@ -151,13 +181,13 @@ public class ShakePhone extends Activity
 									.fromHtml("<big><b>清醒值:\n" + alertValue
 											+ "%</b></big>");
 							textView.setText(senceValue);
-//							vibrator.vibrate(1000);
+							// vibrator.vibrate(1000); //摇晃振动
 						}
 					}
 				}
 			}
 		};
-		
+
 		// 4注册侦听事件
 		mSensorManager.registerListener(sensorListener,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -175,7 +205,8 @@ public class ShakePhone extends Activity
 			}
 			else
 			{
-				Toast.makeText(this, R.string.unablePressBack,Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.unablePressBack,
+						Toast.LENGTH_SHORT).show();
 			}
 			return true;
 		}
