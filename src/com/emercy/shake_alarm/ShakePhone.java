@@ -17,11 +17,14 @@ import android.os.HandlerThread;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
 import android.app.Service;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,9 +103,14 @@ public class ShakePhone extends Activity
 	{
 
 		super.onCreate(savedInstanceState);
-
+		getWindow().addFlags(
+				WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+						| WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+						| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+						| WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 		setContentView(R.layout.shake_phone);
 		getWidget();
+
 		chronometer.setBase(SystemClock.elapsedRealtime());
 		chronometer.start();
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

@@ -37,6 +37,7 @@ public class MainActivity extends Activity
 	private ToggleButton togbtn_AlarmStyle;
 
 	private SharedPreferences sharedData;
+	SharedPreferences.Editor edit;
 	private static boolean alarmStyle = true;			// 闹钟提示方式 (true:铃声;false:振动)
 
 	Calendar c = Calendar.getInstance();
@@ -58,17 +59,16 @@ public class MainActivity extends Activity
 	private void loadData()
 	{
 		sharedData = getSharedPreferences("main_activity", MODE_PRIVATE);
-
-		btn.setText(sharedData.getString("time",sdf.format(new Date(c.getTimeInMillis()))));
+		edit = sharedData.edit();
+		btn.setText(sharedData.getString("time",
+				sdf.format(new Date(c.getTimeInMillis()))));
 		btn_enClk.setChecked(sharedData.getBoolean("on_off", false));
 	}
 
 	private void saveData()
 	{
-		SharedPreferences.Editor edit = sharedData.edit();
 		edit.putString("time", btn.getText().toString());
 		edit.putBoolean("on_off", btn_enClk.isChecked());
-		edit.putBoolean("style", togbtn_AlarmStyle.isChecked());
 		edit.commit();
 	}
 
@@ -186,6 +186,9 @@ public class MainActivity extends Activity
 										{
 											MainActivity.setAlarmStyle(false);
 										}
+
+										edit.putBoolean("style",
+												togbtn_AlarmStyle.isChecked());
 										btn_enClk.setChecked(true);
 										Toast.makeText(MainActivity.this,
 												"闹钟设置成功", Toast.LENGTH_LONG)
