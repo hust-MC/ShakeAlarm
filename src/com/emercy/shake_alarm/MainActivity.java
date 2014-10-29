@@ -4,8 +4,6 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import com.emercy.shake_alarm.R;
-
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -114,17 +112,20 @@ public class MainActivity extends Activity
 
 	class ButtonListener implements OnClickListener
 	{
-		private TimePicker timePicker;
+		private TimePicker timePicker;			//申明时间控件
 
-		private PendingIntent pi;
+		private PendingIntent pi;				
 		private Intent intent;
 		AlarmManager alarmManager;
 		LayoutInflater inflater;
 		LinearLayout setAlarmLayout;
 
+		/**
+		 * 在ButtonListener构造方法中加载对话框的布局
+		 */
 		public ButtonListener()
 		{
-			inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);		//用于加载alertdialog布局
 			alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 			setAlarmLayout = (LinearLayout) inflater.inflate(
 					R.layout.alarm_dialog, null);
@@ -256,9 +257,8 @@ public class MainActivity extends Activity
 			break;
 
 		case R.id.menu_about:
-			new AlertDialog.Builder(this).setTitle("关于")
-					.setMessage("摇摇乐v1.5").setNegativeButton("确定", null)
-					.show();
+			new AlertDialog.Builder(this).setTitle("关于").setMessage("摇摇乐v1.5")
+					.setNegativeButton("确定", null).show();
 			break;
 		default:
 			break;
