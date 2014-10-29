@@ -158,8 +158,7 @@ public class ShakePhone extends Activity
 				int sensorType = event.sensor.getType();
 
 				// 读取摇一摇敏感值
-				int shakeSenseValue = Integer.parseInt(getResources()
-						.getString(R.string.shakeSenseValue));
+				int shakeSenseValue = Integer.parseInt(MainActivity.shakeSenseValue);
 				// values[0]:X轴，values[1]：Y轴，values[2]：Z轴
 				float[] values = event.values;
 

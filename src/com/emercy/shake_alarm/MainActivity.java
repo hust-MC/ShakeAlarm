@@ -16,6 +16,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -32,6 +35,12 @@ public class MainActivity extends Activity
 	 * @see android.app.Activity#onPause()
 	 */
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 */
+
 	private Button btn;									// 申明设置时钟按钮
 	private ToggleButton btn_enClk;						// 申明开启\关闭按钮
 	private ToggleButton togbtn_AlarmStyle;
@@ -45,6 +54,7 @@ public class MainActivity extends Activity
 	final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
 	static MainActivity instance;
+	static String shakeSenseValue;
 
 	public static void setAlarmStyle(boolean style)
 	{
@@ -79,7 +89,7 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		instance = this;								// 用于在ShakeAlarm窗口中关闭此activity
-
+		shakeSenseValue = getResources().getString(R.string.shakeSenseValue_2);
 		String timeOnBtn = "";
 
 		timeOnBtn = sdf.format(new Date(c.getTimeInMillis()));
@@ -210,4 +220,50 @@ public class MainActivity extends Activity
 			}
 		}
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		getMenuInflater().inflate(R.menu.main, menu);
+		SubMenu subMenu = menu.addSubMenu("摇晃灵敏度");
+		subMenu.add(1, 1, 1, "温柔甩");
+		subMenu.add(1, 2, 2, "正常甩");
+		subMenu.add(1, 3, 3, "暴力甩");
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case 1:
+			shakeSenseValue = getResources().getString(
+					R.string.shakeSenseValue_1);
+			Toast.makeText(this, "温柔甩设置成功", Toast.LENGTH_SHORT).show();
+			break;
+
+		case 2:
+			shakeSenseValue = getResources().getString(
+					R.string.shakeSenseValue_2);
+			Toast.makeText(this, "普通甩设置成功", Toast.LENGTH_SHORT).show();
+			break;
+
+		case 3:
+			shakeSenseValue = getResources().getString(
+					R.string.shakeSenseValue_3);
+			Toast.makeText(this, "暴力甩设置成功", Toast.LENGTH_SHORT).show();
+			break;
+
+		case R.id.menu_about:
+			new AlertDialog.Builder(this).setTitle("关于")
+					.setMessage("摇摇乐v1.5").setNegativeButton("确定", null)
+					.show();
+			break;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 }
