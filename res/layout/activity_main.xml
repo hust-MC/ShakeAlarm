@@ -16,7 +16,8 @@
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
             android:layout_marginRight="10dp"
-            android:checked="false" />
+            android:checked="false"
+            android:background="@drawable/small_button" />
 
         <Button
             android:id="@+id/btn_setClock"
@@ -24,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/btn_enClk"
             android:layout_toLeftOf="@+id/btn_enClk"
+            android:background="@drawable/button"
             android:text="设置闹钟" />
     </RelativeLayout>
-
 </LinearLayout>

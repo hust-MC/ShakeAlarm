@@ -7,10 +7,17 @@
 
     <TextView
         android:id="@+id/shake_sence_value"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="清醒值:\n0"
         android:textSize="30pt" />
+
+    <Chronometer
+        android:id="@+id/cm_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
 
 </LinearLayout>

@@ -3,8 +3,6 @@ package com.emercy.shake_alarm;
 import java.io.IOException;
 import java.util.List;
 
-import com.emercy.puzzlealarm.R;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,14 +14,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.SystemClock;
 import android.os.Vibrator;
-import android.provider.CalendarContract.Instances;
 import android.app.Activity;
 import android.app.Service;
 import android.text.Html;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,9 +41,13 @@ public class ShakePhone extends Activity
 	private int alertValue = 0;
 	private boolean wakeUp = false;						// 标志是否醒来
 
+	private Chronometer chronometer;
+
 	private void getWidget()
 	{
 		textView = (TextView) findViewById(R.id.shake_sence_value);
+		chronometer = (Chronometer) findViewById(R.id.cm_count);
+		chronometer.setFormat("本次起床用了:%s秒");
 	}
 
 	private void playAlarm()
@@ -100,7 +103,8 @@ public class ShakePhone extends Activity
 
 		setContentView(R.layout.shake_phone);
 		getWidget();
-
+		chronometer.setBase(SystemClock.elapsedRealtime());
+		chronometer.start();
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		// 1获得硬件信息
 
@@ -172,6 +176,10 @@ public class ShakePhone extends Activity
 							mSensorManager.unregisterListener(sensorListener);
 							textView.setTextColor(android.graphics.Color.MAGENTA);
 							textView.setText("清醒值:\n100%\n\n成功起床\n☺");
+
+							chronometer.stop();
+							chronometer.setVisibility(View.VISIBLE);
+
 							wakeUp = true;
 							vibrator.vibrate(2000);
 						}
