@@ -4,9 +4,9 @@
     <string name="app_name">摇摇醒</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="shakeSenseValue_1">13</string>
-    <string name="shakeSenseValue_2">15</string>
-    <string name="shakeSenseValue_3">18</string>
+    <string name="shakeSenseValue_1">11</string>
+    <string name="shakeSenseValue_2">13</string>
+    <string name="shakeSenseValue_3">17</string>
     <string name="pressBackAgain">再按一次退出</string>
     <string name="unablePressBack">清醒值未达标,无法退出</string>
 

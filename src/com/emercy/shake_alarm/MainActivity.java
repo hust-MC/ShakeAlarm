@@ -247,7 +247,7 @@ public class MainActivity extends Activity
 		case 2:
 			shakeSenseValue = getResources().getString(
 					R.string.shakeSenseValue_2);
-			Toast.makeText(this, "普通甩设置成功", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "正常甩设置成功", Toast.LENGTH_SHORT).show();
 			break;
 
 		case 3:
