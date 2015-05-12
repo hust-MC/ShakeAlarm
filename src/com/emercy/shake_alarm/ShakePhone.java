@@ -17,8 +17,6 @@ import android.os.HandlerThread;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.app.Activity;
-import android.app.KeyguardManager;
-import android.app.KeyguardManager.KeyguardLock;
 import android.app.Service;
 import android.text.Html;
 import android.view.KeyEvent;
@@ -202,7 +200,6 @@ public class ShakePhone extends Activity
 				}
 			}
 		};
-
 		// 4注册侦听事件
 		mSensorManager.registerListener(sensorListener,
 				mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),

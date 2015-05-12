@@ -140,10 +140,10 @@ public class MainActivity extends Activity
 			c.set(Calendar.SECOND, 0); // 设置闹钟的秒数
 			c.set(Calendar.MILLISECOND, 0); // 设置闹钟的毫秒数
 
-			if (c.getTimeInMillis() - System.currentTimeMillis() < 0)
-			{
-				c.roll(Calendar.DATE, 1);
-			}
+//			if (c.getTimeInMillis() - System.currentTimeMillis() < 0)
+//			{
+//				c.roll(Calendar.DATE, 1);
+//			}
 
 			btn.setText(sdf.format(new Date(c.getTimeInMillis())));
 			intent = new Intent(MainActivity.this, AlarmReceiver.class);    // 创建Intent对象
