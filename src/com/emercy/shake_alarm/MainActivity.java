@@ -86,7 +86,7 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		instance = this;								// 用于在ShakeAlarm窗口中关闭此activity
+		instance = this;										// 用于在ShakeAlarm窗口中关闭此activity
 		shakeSenseValue = getResources().getString(R.string.shakeSenseValue_2);
 		String timeOnBtn = "";
 
@@ -112,9 +112,9 @@ public class MainActivity extends Activity
 
 	class ButtonListener implements OnClickListener
 	{
-		private TimePicker timePicker;			//申明时间控件
+		private TimePicker timePicker;			// 申明时间控件
 
-		private PendingIntent pi;				
+		private PendingIntent pi;
 		private Intent intent;
 		AlarmManager alarmManager;
 		LayoutInflater inflater;
@@ -125,7 +125,7 @@ public class MainActivity extends Activity
 		 */
 		public ButtonListener()
 		{
-			inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);		//用于加载alertdialog布局
+			inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);		// 用于加载alertdialog布局
 			alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 			setAlarmLayout = (LinearLayout) inflater.inflate(
 					R.layout.alarm_dialog, null);
@@ -140,10 +140,10 @@ public class MainActivity extends Activity
 			c.set(Calendar.SECOND, 0); // 设置闹钟的秒数
 			c.set(Calendar.MILLISECOND, 0); // 设置闹钟的毫秒数
 
-//			if (c.getTimeInMillis() - System.currentTimeMillis() < 0)
-//			{
-//				c.roll(Calendar.DATE, 1);
-//			}
+			// if (c.getTimeInMillis() - System.currentTimeMillis() < 0)
+			// {
+			// c.roll(Calendar.DATE, 1);
+			// }
 
 			btn.setText(sdf.format(new Date(c.getTimeInMillis())));
 			intent = new Intent(MainActivity.this, AlarmReceiver.class);    // 创建Intent对象
